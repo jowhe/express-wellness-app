@@ -11,7 +11,7 @@ async function authenticateToken(req, res, next){
   // Split the token from Bearer.
   const token = authHeader && authHeader.split(' ')[1];
   if(!token){
-      sendResponse(req, res, 401, false, '⛔ Error; Authentication Token Required!');
+    return sendResponse(req, res, 401, false, '⛔ Error; Authentication Token Required!');
   }
 
   // Verify the token, if it is valid, then proceed to the next middleware.
