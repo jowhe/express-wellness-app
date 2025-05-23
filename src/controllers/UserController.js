@@ -1,3 +1,4 @@
+const env = require('../config/env');
 const Controller = require('../models/Controller');
 const User = require('../models/User');
 const {sendResponse} = require('../utils/functions');
@@ -23,7 +24,7 @@ class UserController extends Controller{
           const [userData] = await this.database.select("SELECT id, username, email, weight, age, height, created_at, updated_at FROM Users WHERE id = ?", [user.id]);
 
           // Retrieve the workouts from the workout API.
-          const workouts = await fetch(`http://localhost:10101/api/v1/workouts/`, {
+          const workouts = await fetch(`${env.API_BASE}/workouts/`, {
             method: 'GET',
             headers: {
               "Authorization": `Bearer ${req.token}`,
@@ -32,7 +33,7 @@ class UserController extends Controller{
           const {data: workoutData} = await workouts.json();
 
           // Retrieve the workouts from the workout API.
-          const goals = await fetch(`http://localhost:10101/api/v1/goals/`, {
+          const goals = await fetch(`${env.API_BASE}/goals/`, {
             method: 'GET',
             headers: {
               "Authorization": `Bearer ${req.token}`,
@@ -40,7 +41,7 @@ class UserController extends Controller{
           });
           const {data: goalData} = await goals.json();
 
-          const meals = await fetch(`http://localhost:10101/api/v1/meals/`, {
+          const meals = await fetch(`${env.API_BASE}/meals/`, {
             method: 'GET',
             headers: {
               "Authorization": `Bearer ${req.token}`,
@@ -48,7 +49,7 @@ class UserController extends Controller{
           });
           const {data: mealData} = await meals.json();
 
-          const recommendations = await fetch(`http://localhost:10101/api/v1/recommendations/`, {
+          const recommendations = await fetch(`${env.API_BASE}/recommendations/`, {
             method: 'GET',
             headers: {
               "Authorization": `Bearer ${req.token}`,
@@ -72,7 +73,7 @@ class UserController extends Controller{
         const userList = await Promise.all(userData.map(async (user) => {
           const userObj = new User(user.id, user.username, user.email, user.weight, user.height, user.age);
 
-          const workouts = await fetch(`http://localhost:10101/api/v1/workouts/${user.id}`, {
+          const workouts = await fetch(`${env.API_BASE}/workouts/${user.id}`, {
             method: 'GET',
             headers: {
               "Authorization": `Bearer ${req.token}`,
@@ -80,7 +81,7 @@ class UserController extends Controller{
           });
           const {data: workoutData} = await workouts.json();
 
-          const goals = await fetch(`http://localhost:10101/api/v1/goals/${user.id}`, {
+          const goals = await fetch(`${env.API_BASE}/goals/${user.id}`, {
             method: 'GET',
             headers: {
               "Authorization": `Bearer ${req.token}`,
@@ -88,7 +89,7 @@ class UserController extends Controller{
           });
           const {data: goalsData} = await goals.json();
 
-          const meals = await fetch(`http://localhost:10101/api/v1/meals/${user.id}`, {
+          const meals = await fetch(`${env.API_BASE}/meals/${user.id}`, {
             method: 'GET',
             headers: {
               "Authorization": `Bearer ${req.token}`,
@@ -96,7 +97,7 @@ class UserController extends Controller{
           });
           const {data: mealsData} = await meals.json();
 
-          const recommendations = await fetch(`http://localhost:10101/api/v1/recommendations/${user.id}`, {
+          const recommendations = await fetch(`${env.API_BASE}/recommendations/${user.id}`, {
             method: 'GET',
             headers: {
               "Authorization": `Bearer ${req.token}`,
@@ -167,7 +168,7 @@ class UserController extends Controller{
         }
 
         // Pull the existing user data from /api/v1/users/:id
-        const existingUser = await fetch(`http://localhost:10101/api/v1/users/${id ? id : user.id}`, {
+        const existingUser = await fetch(`${env.API_BASE}/users/${id ? id : user.id}`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${req.token}`,

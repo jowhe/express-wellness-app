@@ -1,3 +1,4 @@
+const env = require('../config/env');
 const Controller = require('../models/Controller');
 const Meal = require('../models/Meal');
 const {sendResponse, generateUUID} = require('../utils/functions');
@@ -95,7 +96,7 @@ class MealController extends Controller{
         case 'Breakfast':
           if(calories >= 500){
             const recText = "🍳 Try to keep your breakfast under 500 calories for a balanced start to the day.";
-            const recResponse = await fetch('http://localhost:10101/api/v1/recommendations', {
+            const recResponse = await fetch(`${env.API_BASE}/recommendations`, {
               method: 'POST',
               headers: {
                 "Authorization": `Bearer ${req.token}`,
@@ -112,7 +113,7 @@ class MealController extends Controller{
         case 'Lunch':
           if(calories >= 700){
             const recText = "🥗 Try to keep your lunch under 700 calories for a balanced meal.";
-            const recResponse = await fetch('http://localhost:10101/api/v1/recommendations', {
+            const recResponse = await fetch(`${env.API_BASE}/recommendations`, {
               method: 'POST',
               headers: {
                 "Authorization": `Bearer ${req.token}`,
@@ -129,7 +130,7 @@ class MealController extends Controller{
         case 'Dinner':
           if(calories >= 800){
             const recText = "🍽️ Try to keep your dinner under 800 calories for a balanced meal.";
-            const recResponse = await fetch('http://localhost:10101/api/v1/recommendations', {
+            const recResponse = await fetch(`${env.API_BASE}/recommendations`, {
               method: 'POST',
               headers: {
                 "Authorization": `Bearer ${req.token}`,
