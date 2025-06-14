@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  main-app:
+    build: .
+    env_file:
+      - .env
+    environment:
+      - PORT=${PORT:-10101}
+    ports:
+      - "${PORT}:10101" # Adjust if your app uses a different port
+    restart: unless-stopped
